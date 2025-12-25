@@ -1,3 +1,5 @@
-# Blog
+# Oracle SQL Performance optimization
 
-Hello
+Lately I spent some time doing performance optimization of an Oracle database. Here, I would like to share my key takeaways.
+
+
