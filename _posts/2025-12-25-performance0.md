@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "My First Blog Post"
+title: "Oracle SQL performance"
 date: 2025-12-25
-categories: [programming, tutorial]
+categories: [SQL, Oracle, performance]
 ---
 Lately I spent some time with performance optimization in Oracle SQL and I would like to share my key preliminary takeaways.
 
