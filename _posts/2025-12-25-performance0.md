@@ -10,3 +10,15 @@ Lately I spent some time with performance optimization in Oracle SQL and I would
 ### Filter early, add late
 
 The entire SELECT statement can be imagined as a tree. The top-level SELECT statement is the root of the tree, while the row sources are the leaves. Within this tree, filters should be applied as early as possible. Also, data should be added as late as possible.
+
+### Project early
+
+### Avoid SELECT DISTINCT and UNION
+
+### Use CROSS JOINS
+CROSS JOINS should be used whenever they make sense. CROSS JOINS incentivize the use of early filters.
+
+### Avoid functions is predicates
+
+### Avoid table repetitions
+
