@@ -15,10 +15,8 @@ The performance can be quantified using different metrics, e.g. observed runtime
 ### Filter early, add late
 
 The entire SELECT statement can be imagined as a tree. The top-level SELECT statement is the root of the tree, while the row sources are the leaves. Within this tree, filters should be applied as early as possible. Also, data should be added as late as possible.
-{% raw %}
-```sql
-SELECT * FROM products;
-{% endraw %}
+```liquid
+{% include sql-example.html %}
 
 ### Project early
 
