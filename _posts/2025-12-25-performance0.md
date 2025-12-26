@@ -29,10 +29,14 @@ SELECT
 
 ### Avoid SELECT DISTINCT and UNION
 
+Both SELECT DISTINCT (instead of SELECT) and UNION (instead of UNION ALL) involve deduplication. The problem with deduplication is twofold. First, energy is spent in order to retrieve and process data, that is later thrown away. Secondly, energy is spent to throw the surplus data away.
+
 ### Use CROSS JOINS
 CROSS JOINS should be used whenever they make sense. CROSS JOINS incentivize the use of early filters.
 
 ### Avoid functions is predicates
 
 ### Avoid table repetitions
+
+### Use bind variables
 
