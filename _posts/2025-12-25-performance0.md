@@ -23,8 +23,8 @@ The entire SELECT statement can be imagined as a tree. The top-level SELECT stat
 
 ```sql 
 --Bad
-WITH t0 as (SELECT id, amount, '1' AS code FROM t0 WHERE amount > 0)
-SELECT t0.id, t0.amount, t0.code FROM t0 INNER JOIN t1 on t0.id = t1.id
+WITH t0 as (SELECT id, amount, '1' AS code FROM t0)
+SELECT t0.id, t0.amount, t0.code FROM t0 INNER JOIN t1 on t0.id = t1.id WHERE t0.amount > 0
 
 --Good
 WITH t0 as (SELECT id, amount FROM t0 WHERE amount > 0)
@@ -47,4 +47,6 @@ CROSS JOINS should be used whenever they make sense. CROSS JOINS incentivize the
 ### Avoid table repetitions
 
 ### Use bind variables
+
+### Beware of hints
 
