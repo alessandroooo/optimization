@@ -35,7 +35,7 @@ SELECT t0.id, t0.amount, '1' AS code FROM t0 INNER JOIN t1 on t0.id = t1.id
 
 ### Avoid SELECT DISTINCT and UNION
 
-Both SELECT DISTINCT (instead of SELECT) and UNION (instead of UNION ALL) involve deduplication. The problem with deduplication is twofold. First, energy is spent in order to retrieve and process data, that is later thrown away. Secondly, energy is spent to throw the surplus data away.
+Both SELECT DISTINCT (instead of SELECT) and UNION (instead of UNION ALL) involve deduplication. The problem with deduplication is at least twofold. First, energy is spent in order to retrieve and process surplus data, that is later thrown away. Secondly, energy is spent to keep rows in memory, match rows and throw the surplus data away. The presence of SELECT DISTINCT and UNION is a manifestation of the **inability** to order or address exactly the rows which are needed and renders the query less comprehensible. 
 
 ### Use CROSS JOINS
 CROSS JOINS should be used whenever they make sense. CROSS JOINS incentivize the use of early filters.
