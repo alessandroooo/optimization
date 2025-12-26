@@ -34,7 +34,7 @@ Both SELECT DISTINCT (instead of SELECT) and UNION (instead of UNION ALL) involv
 ### Use CROSS JOINS
 CROSS JOINS should be used whenever they make sense. CROSS JOINS incentivize the use of early filters.
 
-### Avoid functions is predicates
+### Avoid functions in predicates
 
 ### Avoid table repetitions
 
