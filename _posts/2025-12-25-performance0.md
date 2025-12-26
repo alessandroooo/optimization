@@ -22,7 +22,8 @@ Here comes the list of points to consider for performance optimization:
 The entire SELECT statement can be imagined as a tree. The top-level SELECT statement is the root of the tree, while the row sources are the leaves. Within this tree, filters should be applied as early as possible. Also, data should be added as late as possible.
 
 ```sql 
-SELECT
+WITH t0 as (SELECT id, amount FROM t0 WHERE amount > 0)
+SELECT t0.id, t0.amount FROM t0 INNER JOIN t1 on t0.id = t1.id
 ```
 
 ### Project early
