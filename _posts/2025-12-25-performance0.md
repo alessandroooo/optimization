@@ -42,6 +42,8 @@ CROSS JOINS should be used whenever they make sense. CROSS JOINS incentivize the
 
 ### Avoid functions in predicates
 
+### Avoid joins to tables that are not needed.
+
 ### Avoid table repetitions
 
 ### Use bind variables
