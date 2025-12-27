@@ -99,4 +99,6 @@ should be treated with suspicion. The general rule is to not use them. There are
 SYS.COL_USAGE$
 
 ### Indexes
+Bitmap indexes may be used for columns with low cardinality and infrequent updates.
+When using composite B‑tree indexes, the more selective or frequently filtered columns should be placed on the left side of the index, with less important columns to the right.
 
