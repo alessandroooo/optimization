@@ -8,12 +8,12 @@ Lately I spent some time with performance optimization in Oracle SQL and here I 
 
 ### The problem
 
-Given is a SELECT statement (possibly using common table expressions, i.e. the WITH clause) that should be replaced by another statement, which is logically equivalent, but has better performance. This immediately leads to two questions, namely: *What is performance?* and *What is logical equivalence?*
+Given is a SELECT statement (possibly using common table expressions, i.e. involving the WITH clause) that should be replaced by another statement, which is logically equivalent, but has better performance. This immediately leads to two questions, namely: *What is performance?* and *What is logical equivalence?*
 
 #### Logical equivalence
-Two SELECTS are logically equivalent if they return the same result, issued against all possible data instantiations of the database. In real life there is no time to test against all possible data. Instead, we are forced to live with necessarily incomplete test data. Hence, the observed accordance of the result of both SELECTs is a necessary, but not sufficient requirement for logical equivalence.
+Two SELECTS are logically equivalent if they return the same result, issued against all possible data instantiations of the database. In real life there is no time to test against all possible data. Instead, we are forced to live with necessarily incomplete test data. Hence, the observed accordance of the results of both SELECTs is a necessary, but not sufficient requirement for logical equivalence. Hence, it is not possible to assert the logical equivalence of two SELECTs.
 #### Performance
-The performance can be quantified using different metrics, e.g. observed runtime, memory, storage or network footprint. Often the different metrics go hand in hand, i.e. the faster query tends to have lower storage footprint, but there are corner cases. A slow query with low storage footprint might be preferred over a fast query with large storage footprint. In practice, I found the metric TEMP_SPACE_ALLOCATED useful, in order to assess a query's performance. 
+The observed runtime of the same query can vary considerably, depending on database load. For the performance different metrics can be employed, e.g. observed runtime, memory, storage or network footprint. Often the different metrics go hand in hand, i.e. the faster query tends to have lower storage footprint, but there are corner cases. A slow query with low storage footprint might be preferred over a fast query with large storage footprint. The metric TEMP_SPACE_ALLOCATED is useful, in order to assess the query plan performance, see the Oracle table <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/refrn/DBA_HIST_ACTIVE_SESS_HISTORY.html">DBA_HIST_ACTIVE_SESS_HISTORY</a>. Beware of parallel execution in Oracle which can increase the storage footprint.
 
 Here comes the list of points to consider for performance optimization:
 
