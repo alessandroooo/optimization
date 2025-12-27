@@ -71,7 +71,7 @@ SELECT t1.id FROM t1 LEFT JOIN t0 ON t1.id = t0.id WHERE t0.id IS NULL
 ### Avoid table repetitions
 
 ### Use bind variables
-The queries below might look identical, if the bind variable **:product_cd** is set to the value **'1202'**, but they are not. 
+The queries below might look identical, if the bind variable **:product_cd** is set to the value **'1201'**, but they are not. 
 ```sql 
 -- Bad
 SELECT * FROM PRODUCTS WHERE product_cd = '1201'
