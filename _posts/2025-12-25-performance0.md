@@ -4,7 +4,7 @@ title: "Oracle SQL performance"
 date: 2025-12-25
 categories: [SQL, Oracle, performance]
 ---
-Lately I spent some time with performance optimization in Oracle SQL and here I would like to share my key takeaways.
+Lately I spent some time with performance optimization in an Oracle data warehouse and here I would like to share my key takeaways.
 
 ### The problem
 
@@ -13,7 +13,8 @@ Given is a SELECT statement (possibly using common table expressions, i.e. invol
 #### Logical equivalence
 Two SELECTS are logically equivalent if they return the same result, issued against all possible data instantiations of the database. In real life there is no time to test against all possible data. Instead, we are forced to live with necessarily incomplete test data. Hence, the observed accordance of the results of both SELECTs is a necessary, but not sufficient requirement for logical equivalence. Hence, it is not possible to assert the logical equivalence of two SELECTs.
 #### Performance
-The observed runtime of the same query can vary considerably, depending on database load. For the performance different metrics can be employed, e.g. observed runtime, memory, storage or network footprint. Often the different metrics go hand in hand, i.e. the faster query tends to have lower storage footprint, but there are corner cases. A slow query with low storage footprint might be preferred over a fast query with large storage footprint. The metric TEMP_SPACE_ALLOCATED is useful, in order to assess the query plan performance, see the Oracle table <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/refrn/DBA_HIST_ACTIVE_SESS_HISTORY.html">DBA_HIST_ACTIVE_SESS_HISTORY</a>. Beware of parallel execution in Oracle which can increase the storage footprint.
+The observed runtime of the same query can vary considerably, depending on database load. For the performance different metrics can be employed, e.g. observed runtime, memory, storage or network footprint. Often the different metrics go hand in hand, i.e. the faster query tends to have lower storage footprint, but there are corner cases. A slow query with low storage footprint might be preferred over a fast query with large storage footprint. I found the metric TEMP_SPACE_ALLOCATED useful, in order to assess the query plan performance, see the Oracle table <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/refrn/DBA_HIST_ACTIVE_SESS_HISTORY.html">DBA_HIST_ACTIVE_SESS_HISTORY</a> for further details. Beware of <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/vldbg/using-parallel.html">parallel execution</a> in Oracle which can increase the storage footprint.
+
 
 Here comes the list of points to consider for performance optimization:
 
