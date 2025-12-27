@@ -52,7 +52,17 @@ SELECT grid.prefix || t0.id AS id FROM grid CROSS JOIN t0
 
 ### Avoid functions in predicates
 
-### NOT EXISTS
+### EXISTS
+Subqueries within **EXISTS** or **NOT EXISTS** may or may not improve performance. It is possible to reqrite them as JOINs.
+
+```sql 
+-- Bad?
+SELECT t1.id FROM t1
+WHERE NOT EXISTS (SELECT 1 FROM t0 where t0.id = t1.id)
+
+-- Good?
+SELECT t1.id FROM t1 LEFT JOIN t0 ON t1.id = t0.id WHERE t0.id IS NULL
+```
 
 ### Avoid joins to tables that are not needed.
 
