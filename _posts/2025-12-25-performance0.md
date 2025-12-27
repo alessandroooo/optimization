@@ -73,7 +73,7 @@ From the perspective of the database these queries are entirely different. Oracl
 
 ### Beware of hints
 <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Comments.html">Hints</a>
-should be treated with suspicion. The general rule is to not use them. There are even hints in Oracle SQL which are undocumented, such as **materialize**.
+should be treated with suspicion. The general rule is to not use them. There are even undocumented hints in Oracle SQL, such as **materialize**.
 
 ### Small data is good data
 
