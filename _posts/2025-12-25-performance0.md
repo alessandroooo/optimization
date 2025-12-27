@@ -57,6 +57,15 @@ SELECT grid.prefix || t0.id AS id FROM grid CROSS JOIN t0
 ### Avoid table repetitions
 
 ### Use bind variables
+The queries below might look identical, if the bind variable *:product_cd* is set to the value *'1202'*, but they are not. 
+```sql 
+-- Bad
+SELECT * FROM PRODUCTS WHERE product_cd = '1201'
+
+-- Good
+SELECT * FROM PRODUCTS WHERE product_cd = :product_cd
+```
+From the perspective of the database these queries are entirely different. Oracle encourages the use of bind variables instead of hard coded literals, see <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/tgsql/improving-rwp-cursor-sharing.html">here</a>. In practice, the runtime can vary considerably, depending on the use of literals or bind variables.
 
 ### Beware of hints
 
