@@ -67,6 +67,15 @@ SELECT t1.id FROM t1 LEFT JOIN t0 ON t1.id = t0.id WHERE t0.id IS NULL
 ### Avoid joins to tables that are not needed.
 
 ### NULL handling
+The handling of three-valued logic is not entirely consistent within SQL. Anyway, if in a specific context (such as **CASE WHEN**, **JOIN ON**, **WHERE**), the distiction between the truth values **UNKNOWN** and **FALSE** is not significant, then it does not make sense to capure **UNKNOWN** using the functions **COALESCE** or **NVL**.
+
+```sql 
+-- Bad
+SELECT t1.id FROM t0 WHERE COALESCE(amount, 0) > 0
+
+-- Good
+SELECT t1.id FROM t0 WHERE amount > 0
+```
 
 ### Avoid table repetitions
 
