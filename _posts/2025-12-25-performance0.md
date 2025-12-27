@@ -54,6 +54,8 @@ SELECT grid.prefix || t0.id AS id FROM grid CROSS JOIN t0
 
 ### Avoid joins to tables that are not needed.
 
+### NULL handling
+
 ### Avoid table repetitions
 
 ### Use bind variables
@@ -70,4 +72,6 @@ From the perspective of the database these queries are entirely different. Oracl
 ### Beware of hints
 <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Comments.html">Hints</a>
 should be treated with suspicion. The general rule is to not use them.
+
+### Small data is good data
 
