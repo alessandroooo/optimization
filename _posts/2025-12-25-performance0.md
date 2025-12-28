@@ -47,7 +47,7 @@ SELECT a, b, c FROM t1
 
 #### Avoid SELECT DISTINCT and UNION
 
-Both SELECT DISTINCT (instead of SELECT) and UNION (instead of UNION ALL) involve deduplication. The problem with deduplication is at least twofold. First, energy is spent in order to retrieve and process surplus data, that is later thrown away. Secondly, energy is spent to keep rows in memory, match rows and throw the surplus data away. The presence of SELECT DISTINCT and UNION is a manifestation of the **inability** to retrieve or address exactly the rows which are needed and renders the query less comprehensible. If the avoidance of SELECT DISTINCT or UNION is out of reach, moving them closer to the row sources can be advantageous. One problem of using deduplication is that it **hides the necessity** to apply filters early.
+Both SELECT DISTINCT (instead of SELECT) and UNION (instead of UNION ALL) involve deduplication. The problem with deduplication is twofold. First, energy is spent in order to retrieve and process surplus data, that is later thrown away. Secondly, energy is spent to keep rows in memory, match rows and throw the surplus data away. The presence of SELECT DISTINCT and UNION is a manifestation of the **inability** or **failure** to retrieve the desired rows and renders the query less comprehensible and less maintanable. If the avoidance of SELECT DISTINCT or UNION is out of reach, moving them closer to the row sources can be advantageous. One problem of using deduplication is that it **hides the necessity** to apply filters early.
 
 #### Use CROSS JOINs
 CROSS JOINs should be used whenever they make sense and are preferred to JOINs with trivial predicates, which always evaluate to TRUE. The advantage of CROSS JOINs is that they incentivize the use of early filters.
@@ -130,12 +130,13 @@ From the perspective of the database these queries are entirely different. Oracl
 should be treated with suspicion. The general rule is to not use them. There are even undocumented hints in Oracle SQL, such as **materialize**, which can be used to persist intermediate results of a complicated query.
 
 ###Data modelling
-Data modelling concerns (among other things) the choice of data structures used to persist the data. There should be a feedback loop from the observed usage patterns to data modelling.
+Among other things, data modelling concerns the choice of data structures used to persist the data, before it is retrieved. There should be a feedback loop from the observed usage patterns to data modelling. In Oracle, the column usage patterns are stored in the undocumented table **SYS.COL_USAGE$**, which can be used to gain insights.
 
 #### Small data is good data
 
-SYS.COL_USAGE$
 ####Partitioning 
+The hierarchy of <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/logical-storage-structures.html">logical storage structures</a> in Oracle is: Row, Block, Extent, and Segment.
+Every unpartitioned table, table partition or table subpartition is its own segment. Partitioning can reduce the 
 
 #### Indexes
 Bitmap indexes may be used for columns with low cardinality and infrequent updates.
