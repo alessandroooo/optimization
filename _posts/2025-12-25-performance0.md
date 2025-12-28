@@ -15,8 +15,7 @@ Two SELECTS are logically equivalent if they return the same result, issued agai
 #### Performance
 The observed runtime of the same query can vary considerably, depending on database load. For the performance, different metrics can be employed, e.g. observed runtime, memory, storage or network footprint. Often the different metrics go hand in hand, i.e. the faster query tends to have lower storage footprint, but there are corner cases. A slow query with low storage footprint might be preferred over a fast query with large storage footprint. I found the metric TEMP_SPACE_ALLOCATED useful, in order to assess the query plan performance, see the Oracle table <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/refrn/DBA_HIST_ACTIVE_SESS_HISTORY.html">DBA_HIST_ACTIVE_SESS_HISTORY</a> for further details. Beware of <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/vldbg/using-parallel.html">parallel execution</a> in Oracle which can increase the storage footprint.
 
-
-Here comes the list of points to consider for performance optimization:
+Here comes a list of suggestions to consider for performance optimization:
 
 #### Filter early, add late
 
@@ -33,7 +32,7 @@ SELECT t0.id, t0.amount, '1' AS code FROM t0 INNER JOIN t1 on t0.id = t1.id
 ```
 
 #### Project early
-Columns which are not needed should bot be selected in the first place.
+Columns which are not needed downstream should not be selected in the first place.
 
 ```sql 
 -- Bad
