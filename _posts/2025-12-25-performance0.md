@@ -49,7 +49,7 @@ SELECT a, b, c FROM t1
 
 Both SELECT DISTINCT (instead of SELECT) and UNION (instead of UNION ALL) involve deduplication. The problem with deduplication is at least twofold. First, energy is spent in order to retrieve and process surplus data, that is later thrown away. Secondly, energy is spent to keep rows in memory, match rows and throw the surplus data away. The presence of SELECT DISTINCT and UNION is a manifestation of the **inability** to retrieve or address exactly the rows which are needed and renders the query less comprehensible. If the avoidance of SELECT DISTINCT or UNION is out of reach, moving them closer to the row sources can be advantageous. One problem of using deduplication is that it **hides the necessity** to apply filters early.
 
-### Use CROSS JOINS
+### Use CROSS JOINs
 CROSS JOINs should be used whenever they make sense and are preferred to JOINs with trivial predicates, which always evaluate to TRUE. The advantage of CROSS JOINs is that they incentivize the use of early filters.
 ```sql 
 -- Bad
