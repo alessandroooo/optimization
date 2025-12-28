@@ -4,7 +4,7 @@ title: "Oracle SQL performance"
 date: 2025-12-25
 categories: [SQL, Oracle, performance]
 ---
-Lately I spent some time with performance optimization for a data warehouse using Oracle database and here I would like to share my key takeaways.
+Lately I spent some time with performance optimization for a data warehouse using Oracle database and here I would like to share my key takeaways. Most suggestions do not involve data modelling and can be implemented with minimum effort.
 
 ### The problem
 
