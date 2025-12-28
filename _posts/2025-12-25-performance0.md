@@ -18,7 +18,7 @@ The observed runtime of the same query can vary considerably, depending on datab
 
 Here comes the list of points to consider for performance optimization:
 
-### Filter early, add late
+#### Filter early, add late
 
 This is the most important principle. The entire SELECT statement can be imagined as a tree. The top-level SELECT statement, i.e. the final result, is the root of the tree, while the row sources or the underlying base tables are the leaves. Within this tree, filters should be applied as early as possible. Also, data (e.g. setting literal values or joining additional data) should be added as late as possible.
 
@@ -32,7 +32,7 @@ WITH t0 as (SELECT id, amount FROM t0 WHERE amount > 0)
 SELECT t0.id, t0.amount, '1' AS code FROM t0 INNER JOIN t1 on t0.id = t1.id
 ```
 
-### Project early
+#### Project early
 Columns which are not needed should bot be selected in the first place.
 
 ```sql 
@@ -45,11 +45,11 @@ WITH t1 as (SELECT a, b, c FROM t0)
 SELECT a, b, c FROM t1
 ```
 
-### Avoid SELECT DISTINCT and UNION
+#### Avoid SELECT DISTINCT and UNION
 
 Both SELECT DISTINCT (instead of SELECT) and UNION (instead of UNION ALL) involve deduplication. The problem with deduplication is at least twofold. First, energy is spent in order to retrieve and process surplus data, that is later thrown away. Secondly, energy is spent to keep rows in memory, match rows and throw the surplus data away. The presence of SELECT DISTINCT and UNION is a manifestation of the **inability** to retrieve or address exactly the rows which are needed and renders the query less comprehensible. If the avoidance of SELECT DISTINCT or UNION is out of reach, moving them closer to the row sources can be advantageous. One problem of using deduplication is that it **hides the necessity** to apply filters early.
 
-### Use CROSS JOINs
+#### Use CROSS JOINs
 CROSS JOINs should be used whenever they make sense and are preferred to JOINs with trivial predicates, which always evaluate to TRUE. The advantage of CROSS JOINs is that they incentivize the use of early filters.
 ```sql 
 -- Bad
@@ -61,7 +61,7 @@ WITH grid AS (SELECT 1 AS prefix FROM dual UNION ALL SELECT 2 AS prefix FROM dua
 SELECT grid.prefix || t0.id AS id FROM grid CROSS JOIN t0
 ```
 
-### Avoid functions in predicates
+#### Avoid functions in predicates
 Functions in JOIN predicates should be avoided. Beware of implicit type conversions.
 
 ```sql 
@@ -74,7 +74,7 @@ WITH t1 as (SELECT TO_NUMBER(id) AS id, a FROM t0)
 SELECT t1.a, t2.b FROM t1 INNER JOIN t2 ON t1.id = t2.id
 ```
 
-### EXISTS
+#### EXISTS
 Subqueries within **EXISTS** or **NOT EXISTS** may or may not improve performance. Often it is possible to rewrite them as JOINs. Beware of not introducing duplicates when doing so.
 
 ```sql 
@@ -86,7 +86,7 @@ WHERE NOT EXISTS (SELECT 1 FROM t0 where t0.id = t1.id)
 SELECT t1.id FROM t1 LEFT JOIN t0 ON t1.id = t0.id WHERE t0.id IS NULL
 ```
 
-### Avoid joins to tables that are not needed.
+#### Avoid joins to tables that are not needed.
 This might seem obvious, but deviations from this rule are occassionally observed.
 
 ```sql 
@@ -100,7 +100,7 @@ SELECT t0.a, t2.b FROM t0
 LEFT JOIN t2 ON t0.id = t2.id
 ```
 
-### NULL handling
+#### NULL handling
 The handling of three-valued logic is not entirely consistent within SQL. Anyway, if in a specific context (such as predicates used by **CASE WHEN**, **JOIN ON**, or **WHERE**), the distinction between the truth values **UNKNOWN** and **FALSE** is irrelevant, then it does not make sense to capture **UNKNOWN** using functions like **COALESCE** or **NVL**. In these contexts, as long as a complicated predicate does not involve negations (**NOT**), but only conjunctions (**AND**) or disjunctions (**OR**), it is safe to ignore the distinction between the truth values **UNKNOWN** and **FALSE**. Think about it.
 
 ```sql 
@@ -111,10 +111,10 @@ SELECT t1.id FROM t0 WHERE COALESCE(amount, 0) > 0
 SELECT t1.id FROM t0 WHERE amount > 0
 ```
 
-### Avoid table repetitions
-Multiple occurrences of the same base tables within a single SELECT statement should be treated with suspicion. If there is redundance which can be eliminated, one should aspire to do so. 
+#### Avoid table repetitions
+Multiple occurrences of the same base tables within a single SELECT statement should be treated with suspicion. If there is redundance which can be avoided, one should aspire to do so. 
 
-### Use bind variables
+#### Use bind variables
 The queries below might look identical, if the bind variable **:product_cd** is set to the value **'1201'**, but they are not. 
 ```sql 
 -- Bad
@@ -125,15 +125,19 @@ SELECT * FROM PRODUCTS WHERE product_cd = :product_cd
 ```
 From the perspective of the database these queries are entirely different. Oracle encourages the use of <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/tgsql/improving-rwp-cursor-sharing.html">bind variables</a>, instead of hard coded literals. In practice, the runtime can vary considerably, depending on the use of bind variables or literals.
 
-### Beware of hints
+#### Beware of hints
 <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Comments.html">Hints</a>
-should be treated with suspicion. The general rule is to not use them. There are even undocumented hints in Oracle SQL, such as **materialize**.
+should be treated with suspicion. The general rule is to not use them. There are even undocumented hints in Oracle SQL, such as **materialize**, which can be used to persist intermediate results of a complicated query.
 
-### Small data is good data
+###Data modelling
+Data modelling concerns (among other things) the choice of data structures used to persist the data. There should be a feedback loop from the observed usage patterns to data modelling.
+
+#### Small data is good data
 
 SYS.COL_USAGE$
+####Partitioning 
 
-### Indexes
+#### Indexes
 Bitmap indexes may be used for columns with low cardinality and infrequent updates.
 When using composite B‑tree indexes, the more selective or frequently filtered columns should be placed on the left side of the index, with less important columns to the right.
 
