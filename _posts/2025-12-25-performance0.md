@@ -4,7 +4,7 @@ title: "Oracle SQL performance"
 date: 2025-12-25
 categories: [SQL, Oracle, performance]
 ---
-Lately I spent some time with performance optimization in an Oracle data warehouse and here I would like to share my key takeaways.
+Lately I spent some time with performance optimization for a data warehouse using Oracle database and here I would like to share my key takeaways.
 
 ### The problem
 
@@ -20,7 +20,7 @@ Here comes the list of points to consider for performance optimization:
 
 ### Filter early, add late
 
-The entire SELECT statement can be imagined as a tree. The top-level SELECT statement is the root of the tree, while the row sources or the underlying base tables are the leaves. Within this tree, filters should be applied as early as possible. Also, data (e.g. literal values) should be added as late as possible.
+This is the most important principle. The entire SELECT statement can be imagined as a tree. The top-level SELECT statement, i.e. the final result, is the root of the tree, while the row sources or the underlying base tables are the leaves. Within this tree, filters should be applied as early as possible. Also, data (e.g. setting literal values or joining additional data) should be added as late as possible.
 
 ```sql 
 -- Bad
