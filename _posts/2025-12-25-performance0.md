@@ -71,11 +71,11 @@ This might seem obvious, but deviations from this rule are occassionally observe
 -- Bad
 SELECT t0.a, t2.b FROM t0
 LEFT JOIN t1 ON t0.id = t1.id
-LEFT HOIN t2 ON t0.id = t2.id
+LEFT JOIN t2 ON t0.id = t2.id
 
 -- Good
 SELECT t0.a, t2.b FROM t0
-LEFT HOIN t2 ON t0.id = t2.id
+LEFT JOIN t2 ON t0.id = t2.id
 ```
 
 ### NULL handling
