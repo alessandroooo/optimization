@@ -62,6 +62,17 @@ SELECT grid.prefix || t0.id AS id FROM grid CROSS JOIN t0
 ```
 
 ### Avoid functions in predicates
+Functions in JOIN predicates should be avoided. Beware of implicit type conversions.
+
+```sql 
+-- Bad
+WITH t1 as (SELECT id, a FROM t0)
+SELECT t1.a, t2.b FROM t1 INNER JOIN t2 ON TO_NUMBER(t1.id) = t2.id
+
+-- Good
+WITH t1 as (SELECT TO_NUMBER(id) AS id, a FROM t0)
+SELECT t1.a, t2.b FROM t1 INNER JOIN t2 ON t1.id = t2.id
+```
 
 ### EXISTS
 Subqueries within **EXISTS** or **NOT EXISTS** may or may not improve performance. Often it is possible to rewrite them as JOINs. Beware of not introducing duplicates when doing so.
