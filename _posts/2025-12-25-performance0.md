@@ -65,9 +65,21 @@ SELECT t1.id FROM t1 LEFT JOIN t0 ON t1.id = t0.id WHERE t0.id IS NULL
 ```
 
 ### Avoid joins to tables that are not needed.
+This might seem obvious, but deviations from this rule are occassionally observed.
+
+```sql 
+-- Bad
+SELECT t0.a, t2.b FROM t0
+LEFT JOIN t1 ON t0.id = t1.id
+LEFT HOIN t2 ON t0.id = t2.id
+
+-- Good
+SELECT t0.a, t2.b FROM t0
+LEFT HOIN t2 ON t0.id = t2.id
+```
 
 ### NULL handling
-The handling of three-valued logic is not entirely consistent within SQL. Anyway, if in a specific context (such as **CASE WHEN**, **JOIN ON**, or **WHERE**), the distiction between the truth values **UNKNOWN** and **FALSE** is not significant, then it does not make sense to capure **UNKNOWN** using functions like **COALESCE** or **NVL**.
+The handling of three-valued logic is not entirely consistent within SQL. Anyway, if in a specific context (such as predicates used by **CASE WHEN**, **JOIN ON**, or **WHERE**), the distiction between the truth values **UNKNOWN** and **FALSE** is not significant, then it does not make sense to capture **UNKNOWN** using functions like **COALESCE** or **NVL**.
 
 ```sql 
 -- Bad
@@ -78,6 +90,7 @@ SELECT t1.id FROM t0 WHERE amount > 0
 ```
 
 ### Avoid table repetitions
+Multiple occurrences of the same base tables within a single SELECT statement should be treated with suspicion. If there is redundance which can be eliminated, one should aspire to do so. 
 
 ### Use bind variables
 The queries below might look identical, if the bind variable **:product_cd** is set to the value **'1201'**, but they are not. 
