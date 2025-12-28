@@ -134,9 +134,9 @@ Among other things, data modelling concerns the choice of data structures used t
 
 #### Small data is good data
 
-####Partitioning 
+#### Partitioning 
 The hierarchy of <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/logical-storage-structures.html">logical storage structures</a> in Oracle is: Row, Block, Extent, and Segment.
-Every unpartitioned table, table partition or table subpartition is its own segment. Partitioning can reduce the 
+Every unpartitioned table, table partition or table subpartition is its own segment. Every extent resides in a single data file on disk. Partitioning can greatly improve performance, because the database might know in advance which data files to retrive from the storage tier, thus avoiding search. Oracle recommends partitioning for tables exceeding 2GB of size.
 
 #### Indexes
 Bitmap indexes may be used for columns with low cardinality and infrequent updates.
