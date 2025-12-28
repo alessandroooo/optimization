@@ -4,7 +4,7 @@ title: "Oracle SQL performance"
 date: 2025-12-25
 categories: [SQL, Oracle, performance]
 ---
-Lately I spent some time with performance optimization for a data warehouse using Oracle database and here I would like to share my key takeaways. Most suggestions do not involve data modelling and can be implemented with minimum effort.
+Lately I spent some time with performance optimization for a data warehouse using Oracle database and here I would like to share my key takeaways. Most suggestions do not involve data modelling and can be implemented with minimum effort. As always, the better the code, the more difficult are improvements.
 
 ### The problem
 
@@ -85,8 +85,8 @@ WHERE NOT EXISTS (SELECT 1 FROM t0 where t0.id = t1.id)
 SELECT t1.id FROM t1 LEFT JOIN t0 ON t1.id = t0.id WHERE t0.id IS NULL
 ```
 
-#### Avoid joins to tables that are not needed.
-This might seem obvious, but deviations from this rule are occassionally observed.
+#### Avoid joins to tables that are not needed
+This might seem obvious and it should be, but deviations from this rule are occasionally observed.
 
 ```sql 
 -- Bad
