@@ -130,11 +130,12 @@ should be treated with suspicion. The general rule is to not use them. There are
 
 ### Data modelling
 
-Among other things, data modelling concerns the choice of data structures used to persist the data, before it is retrieved. There should be a feedback loop from the observed patterns of data retrieval to data modelling. In Oracle, the column usage patterns are stored in the undocumented table **SYS.COL_USAGE$**, which can be used to gain insights.
+Among other things, data modelling concerns the choice of data structures used to persist the data, before it is retrieved. There should be a feedback loop from the observed patterns of data retrieval to data modelling. In Oracle, the column usage patterns are stored in the undocumented table **SYS.COL_USAGE$**, which can be used to gain insights. The partitioning and indexing strategy should fit to the empirical data usage patterns.
 
 #### Small data is good data
+Data redundancies can be present at the column or row level. 
 At the column level small data types should be preferred. 
-At the row level, normalization reduces redundancies present in the table data, but increases the number of tables.
+At the row level, normalization reduces redundancies and overall storage consumption present in the table data. The idea is to split a table into multiple tables having fewer columns and fewer rows.
 
 #### Partitioning 
 <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/vldbg/partition-concepts.html">Partitions</a> divide a table into smaller pieces.
