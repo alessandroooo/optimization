@@ -101,7 +101,7 @@ LEFT JOIN t2 ON t0.id = t2.id
 ```
 
 #### NULL handling
-The handling of three-valued logic is not entirely consistent within SQL. Anyway, if in a specific context (such as predicates used by **CASE WHEN**, **JOIN ON**, or **WHERE**), the distinction between the truth values **UNKNOWN** and **FALSE** is irrelevant, then it does not make sense to capture **UNKNOWN** using functions like **COALESCE** or **NVL**. In these contexts, as long as a complicated predicate does not involve negations (**NOT**), but only conjunctions (**AND**) or disjunctions (**OR**), it is safe to ignore the distinction between the truth values **UNKNOWN** and **FALSE**. Think about it.
+The handling of three-valued logic is not entirely consistent within SQL. Anyway, if in a specific context (such as predicates used by **CASE WHEN**, **JOIN ON**, or **WHERE**), the distinction between the truth values **UNKNOWN** and **FALSE** is irrelevant, then it does not make sense to capture **UNKNOWN** using functions like **COALESCE** or **NVL**. In these contexts, as long as complicated predicates don't involve negations (**NOT**), but only conjunctions (**AND**) or disjunctions (**OR**), it is safe to ignore the distinction between the truth values **UNKNOWN** and **FALSE**. 
 
 ```sql 
 -- Bad
@@ -129,10 +129,13 @@ From the perspective of the database these queries are entirely different. Oracl
 <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Comments.html">Hints</a>
 should be treated with suspicion. The general rule is to not use them. There are even undocumented hints in Oracle SQL, such as **materialize**, which can be used to persist intermediate results of a complicated query.
 
-###Data modelling
-Among other things, data modelling concerns the choice of data structures used to persist the data, before it is retrieved. There should be a feedback loop from the observed usage patterns to data modelling. In Oracle, the column usage patterns are stored in the undocumented table **SYS.COL_USAGE$**, which can be used to gain insights.
+### Data modelling
+
+Among other things, data modelling concerns the choice of data structures used to persist the data, before it is retrieved. There should be a feedback loop from the observed patterns of data retrieval to data modelling. In Oracle, the column usage patterns are stored in the undocumented table **SYS.COL_USAGE$**, which can be used to gain insights.
 
 #### Small data is good data
+At the column level small data types should be preferred. 
+At the row level, normalization reduces redundancies present in the table data, but increases the number of tables.
 
 #### Partitioning 
 <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/vldbg/partition-concepts.html">Partitions</a> divide a table into smaller pieces.
