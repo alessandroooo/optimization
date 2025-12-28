@@ -33,6 +33,17 @@ SELECT t0.id, t0.amount, '1' AS code FROM t0 INNER JOIN t1 on t0.id = t1.id
 ```
 
 ### Project early
+Columns which are not needed should bot be selected in the first place.
+
+```sql 
+-- Bad
+WITH t1 as (SELECT a, b, c, d FROM t0)
+SELECT a, b, c FROM t1
+
+-- Good
+WITH t1 as (SELECT a, b, c FROM t0)
+SELECT a, b, c FROM t1
+```
 
 ### Avoid SELECT DISTINCT and UNION
 
