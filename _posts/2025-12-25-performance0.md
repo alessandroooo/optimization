@@ -137,8 +137,9 @@ Among other things, data modelling concerns the choice of data structures used t
 
 #### Small data is good data
 Data redundancies can be present at the column or row level. 
-At the column level small data types should be preferred. 
-At the row level, normalization reduces redundancies and overall storage consumption present in the table data. The idea is to split a table into multiple tables having fewer columns and fewer rows.
+At the column level small data types should be preferred. For character data **NVARCHAR2**, requires more space than **VARCHAR2** and should only be used, if needed.
+
+At the row level, table normalization reduces redundancies and overall storage consumption present in the table data. The idea is to split a table into multiple tables, each having fewer columns and fewer rows.
 
 #### Partitioning 
 <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/vldbg/partition-concepts.html">Partitions</a> divide a table into smaller pieces.
