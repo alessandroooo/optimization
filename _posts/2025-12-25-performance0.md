@@ -100,7 +100,7 @@ LEFT JOIN t2 ON t0.id = t2.id
 ```
 
 #### NULL handling
-The handling of three-valued logic is not entirely consistent within SQL. Anyway, if in a specific context (such as predicates used by **CASE WHEN**, **JOIN ON**, or **WHERE**), the distinction between the truth values **UNKNOWN** and **FALSE** is irrelevant, then it does not make sense to capture **UNKNOWN** using functions like **COALESCE** or **NVL**. In these contexts, as long as complicated predicates don't involve negations (**NOT**), but only conjunctions (**AND**) or disjunctions (**OR**), it is safe to ignore the distinction between the truth values **UNKNOWN** and **FALSE**. 
+The handling of three-valued logic is not entirely consistent within SQL. Anyway, if in a specific context (such as predicates used after **CASE WHEN**, **JOIN ON**, or **WHERE**), the distinction between the truth values **UNKNOWN** and **FALSE** is irrelevant, then it does not make sense to capture **UNKNOWN** using functions like **COALESCE** or **NVL**. In these contexts, as long as complicated predicates don't involve negations (**NOT**), but only conjunctions (**AND**) or disjunctions (**OR**), it is safe to ignore the distinction between the truth values **UNKNOWN** and **FALSE**. 
 
 ```sql 
 -- Bad
