@@ -61,7 +61,7 @@ SELECT grid.prefix || t0.id AS id FROM grid CROSS JOIN t0
 ```
 
 #### Avoid functions in predicates
-Functions in JOIN predicates should be avoided. Beware of implicit type conversions.
+Functions in JOIN predicates should be avoided. A possible exception is the presence of function-based indexes. Beware of implicit type conversions.
 
 ```sql 
 -- Bad
