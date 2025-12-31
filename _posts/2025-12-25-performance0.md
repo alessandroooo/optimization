@@ -23,12 +23,12 @@ This is the most important principle. The entire SELECT statement can be imagine
 
 ```sql 
 -- Bad
-WITH t0 as (SELECT id, amount, '1' AS code FROM t0)
-SELECT t0.id, t0.amount, t0.code FROM t0 INNER JOIN t1 on t0.id = t1.id WHERE t0.amount > 0
+WITH t1 as (SELECT id, amount, '1' AS code FROM t0)
+SELECT t1.id, t0.amount, t1.code, t2.b FROM t1 INNER JOIN t2 on t1.id = t2.id WHERE t1.amount > 0
 
 -- Good
-WITH t0 as (SELECT id, amount FROM t0 WHERE amount > 0)
-SELECT t0.id, t0.amount, '1' AS code FROM t0 INNER JOIN t1 on t0.id = t1.id
+WITH t1 as (SELECT id, amount FROM t0 WHERE amount > 0)
+SELECT t1.id, t1.amount, '1' AS code, t2.b FROM t1 INNER JOIN t2 on t1.id = t2.id
 ```
 
 #### Project early
@@ -123,6 +123,9 @@ SELECT * FROM PRODUCTS WHERE product_cd = '1201'
 SELECT * FROM PRODUCTS WHERE product_cd = :product_cd
 ```
 From the perspective of the database these queries are entirely different. Oracle encourages the use of <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/tgsql/improving-rwp-cursor-sharing.html">bind variables</a>, instead of hard coded literals. In practice, the runtime can vary considerably, depending on the use of bind variables or literals.
+
+#### Views
+Beware of views that reference other views and multiple recursions thereof. Joins involving views might lead to suboptimal plans.
 
 #### Beware of hints
 <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Comments.html">Hints</a>
