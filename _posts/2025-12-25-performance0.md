@@ -125,7 +125,7 @@ SELECT * FROM PRODUCTS WHERE product_cd = :product_cd
 From the perspective of the database these queries are entirely different. Oracle encourages the use of <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/tgsql/improving-rwp-cursor-sharing.html">bind variables</a>, instead of hard coded literals. In practice, the runtime can vary considerably, depending on the use of bind variables or literals.
 
 #### Views
-Beware of views that reference other views and multiple recursions thereof. Joins involving views might lead to suboptimal plans.
+Beware of views that reference other views, especially when they involve multiple levels of recursion. Joins involving views might lead to suboptimal plans.
 
 #### Beware of hints
 <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Comments.html">Hints</a>
