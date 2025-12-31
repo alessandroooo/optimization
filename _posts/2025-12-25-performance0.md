@@ -24,7 +24,7 @@ This is the most important principle. The entire SELECT statement can be imagine
 ```sql 
 -- Bad
 WITH t1 as (SELECT id, amount, '1' AS code FROM t0)
-SELECT t1.id, t0.amount, t1.code, t2.b FROM t1 INNER JOIN t2 on t1.id = t2.id WHERE t1.amount > 0
+SELECT t1.id, t1.amount, t1.code, t2.b FROM t1 INNER JOIN t2 on t1.id = t2.id WHERE t1.amount > 0
 
 -- Good
 WITH t1 as (SELECT id, amount FROM t0 WHERE amount > 0)
