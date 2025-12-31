@@ -124,6 +124,21 @@ SELECT * FROM PRODUCTS WHERE product_cd = :product_cd
 ```
 From the perspective of the database these queries are entirely different. Oracle encourages the use of <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/tgsql/improving-rwp-cursor-sharing.html">bind variables</a>, instead of hard coded literals. In practice, the runtime can vary considerably, depending on the use of bind variables or literals.
 
+#### CASE WHEN
+If the **WHERE** clause precludes a condition it should not be tested within **CASE WHEN**.
+
+```sql 
+-- Bad
+SELECT CASE
+    WHEN product_cd = '1202' THEN 'a'
+    ELSE 'b' AS description FROM PRODUCTS
+WHERE product_cd = '1201'
+
+-- Good
+SELECT 'b' AS description FROM PRODUCTS
+WHERE product_cd = '1201'
+```
+
 #### Views
 Beware of views that reference other views, especially when they involve multiple levels of recursion. Joins involving views might lead to suboptimal plans.
 
@@ -137,7 +152,7 @@ Among other things, data modelling concerns the choice of data structures used t
 
 #### Small data is good data
 Data redundancies can be present at the column or row level. 
-At the column level small data types should be preferred. For character data **NVARCHAR2**, requires more space than **VARCHAR2** and should only be used, if needed.
+At the column level small data types should be preferred. For character data, **NVARCHAR2** requires more space than **VARCHAR2** and should only be used, if needed.
 
 At the row level, table normalization reduces redundancies and overall storage consumption present in the table data. The idea is to split a table into multiple tables, each having fewer columns and fewer rows.
 
