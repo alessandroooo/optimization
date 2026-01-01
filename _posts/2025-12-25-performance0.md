@@ -164,11 +164,11 @@ should be treated with suspicion. The general rule is to not use them. There are
 
 ### Data modelling
 
-Among other things, data modelling concerns the choice of data structures used to persist the data, before it is retrieved. There should be a feedback loop from the observed patterns of data retrieval to data modelling. In Oracle, the column usage patterns are stored in the undocumented table **SYS.COL_USAGE$**, which can be used to gain insights. The partitioning and indexing strategy should fit to the empirical data usage patterns.
+Among other things, data modelling concerns the choice of data structures used to persist the data, before it is retrieved. There should be a feedback loop from the observed patterns of data retrieval to data modelling. In Oracle, the column usage patterns are stored in the undocumented table **SYS.COL_USAGE$**. This table can be used to gain insights on which columns are popular for filtering. The partitioning and indexing strategy should reflect these empirical column usage patterns.
 
 #### Small data is good data
 Data redundancies can be present at the column or row level. 
-At the column level small data types should be preferred. For character data, **NVARCHAR2** requires more space than **VARCHAR2** and should only be used, if needed.
+At the column level small data types should be preferred. For character data, **NVARCHAR2** requires more space than **VARCHAR2** and should only be used, if needed. Numeric data should not be stored using character types.
 
 At the row level, table normalization reduces redundancies and overall storage consumption present in the table data. The idea is to split a table into multiple tables, each having fewer columns and fewer rows.
 
