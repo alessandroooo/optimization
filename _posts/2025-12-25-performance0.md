@@ -138,6 +138,22 @@ WHERE product_cd = '1201'
 SELECT 'b' AS description FROM PRODUCTS
 WHERE product_cd = '1201'
 ```
+Multiple levels of nested CASE statements are suspicious. If a CASE follows after ELSE, then it should be merged with the higher CASE statement. 
+
+```sql 
+-- Bad
+SELECT CASE
+    WHEN a = 'x' THEN 1 ELSE CASE
+    WHEN b = 'y' THEN 2 ELSE 3 END
+    END AS code FROM PRODUCTS
+
+-- Good
+SELECT CASE
+    WHEN a = 'x' THEN 1
+    WHEN b = 'y' THEN 2
+    ELSE 3 END
+    AS code FROM PRODUCTS
+```
 
 #### Views
 Beware of views that reference other views, especially when they involve multiple levels of recursion. Joins involving views might lead to suboptimal plans.
@@ -157,10 +173,9 @@ At the column level small data types should be preferred. For character data, **
 At the row level, table normalization reduces redundancies and overall storage consumption present in the table data. The idea is to split a table into multiple tables, each having fewer columns and fewer rows.
 
 #### Partitioning 
-<a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/vldbg/partition-concepts.html">Partitions</a> divide a table into smaller pieces.
-The hierarchy of <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/logical-storage-structures.html">logical storage structures</a> in Oracle involves rows, blocks, extents, and segments. Every extent resides in a single data file on disk. Every unpartitioned table, table partition or table subpartition is its own segment. Partitioning enables pruning and can greatly improve performance, because the database might know in advance, which data files to retrive from the storage tier, thus avoiding search. Oracle recommends partitioning for tables exceeding 2GB of size.
+<a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/vldbg/partition-concepts.html">Partitioning</a> divides a table into smaller pieces and involves at maximum two levels.
+The hierarchy of <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/cncpt/logical-storage-structures.html">logical storage structures</a> in Oracle involves rows, blocks, extents, and segments. Every extent resides in a single data file on disk. Every unpartitioned table, table partition or table subpartition is its own segment. Partitioning enables pruning and can greatly improve performance, because the database might know in advance, which data files to retrieve from the storage tier, thus avoiding search. Oracle recommends partitioning for tables exceeding 2GB of size.
 
 #### Indexes
-Bitmap indexes may be used for columns with low cardinality and infrequent updates.
-When using composite B‑tree indexes, the more selective or frequently filtered columns should be placed on the left side of the index, with less important columns to the right.
-
+The standard type of index is the B-tree (balanced tree). If the key is composite, then the more selective or frequently filtered columns should be placed on the left side, with less important columns to the right.
+For columns with low cardinality and infrequent updates bitmap indexes may be used.
