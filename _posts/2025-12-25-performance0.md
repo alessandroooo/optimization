@@ -4,7 +4,7 @@ title: "Oracle SQL performance"
 date: 2025-12-25
 categories: [SQL, Oracle, performance]
 ---
-Lately I spent some time with performance optimization for a data warehouse using Oracle database and here I would like to share my key takeaways. Most suggestions do not involve data modelling and can be implemented with minimum effort. As always, the better the code, the more difficult are improvements.
+Lately I spent some time with performance optimization for a data warehouse using Oracle database and here I would like to share my key takeaways. Most suggestions do not involve data modelling and can be implemented with minimum effort. As always, the better the code, the more difficult are improvements. Why should one care about performance? For one reason, it is fun, but there are more mundane reasons, like cost savings in cloud environments. Since performance is the currency of computing any benefit enables the addition of new features.
 
 ### The problem
 
