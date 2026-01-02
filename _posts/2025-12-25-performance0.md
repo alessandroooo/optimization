@@ -176,7 +176,7 @@ Among other things, data modelling concerns the choice of data structures used t
 Data redundancies can be present at the column or row level. 
 At the column level small data types should be preferred. For character data, **NVARCHAR2** requires more space than **VARCHAR2** and should only be used, if needed. Numeric data should not be stored using character types.
 
-At the row level, table normalization reduces redundancies and overall storage consumption present in the table data. The idea is to split a table into multiple tables, each having fewer columns and fewer rows.
+At the row level, table normalization reduces redundancies and overall storage consumption present in the table data. The idea is to split a table into multiple tables, each having fewer columns and fewer rows. One example of the various forms, is the Boyce Codd normal form (BCNF). In that case, whenever a set of columns X determines another set of columns Y, X must be unique in the table. This is where storage is saved. 
 
 #### Partitioning 
 <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/vldbg/partition-concepts.html">Partitioning</a> divides a table into smaller pieces and involves at maximum two levels.
