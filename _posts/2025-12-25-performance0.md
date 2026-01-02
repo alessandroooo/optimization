@@ -161,13 +161,16 @@ SELECT CASE
 #### Views
 Beware of views that reference other views, especially when they involve multiple levels of recursion. Joins involving views might lead to suboptimal plans.
 
+#### Constraints
+**NOT NULL** or **PRIMARY KEY** constraints help the optimizer in finding an efficient plan.
+
 #### Beware of hints
 <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Comments.html">Hints</a>
 should be treated with suspicion. The general rule is to not use them. There are even undocumented hints in Oracle SQL, such as **materialize**, which can be used to persist intermediate results of a complicated query.
 
 ### Data modelling
 
-Among other things, data modelling concerns the choice of data structures used to persist the data, before it is retrieved. There should be a feedback loop from the observed patterns of data retrieval to data modelling. In Oracle, the column usage patterns are stored in the undocumented table **SYS.COL_USAGE$**. This table can be used to gain insights on which columns are popular for filtering. The partitioning and indexing strategy should reflect these empirical column usage patterns.
+Among other things, data modelling concerns the choice of data structures used to persist the data, before it is retrieved. Possible are tables, materialized views, index-organized tables, and Hash clusters. There should be a feedback loop from the observed patterns of data retrieval to data modelling. In Oracle, the column usage patterns are stored in the undocumented table **SYS.COL_USAGE$**. This table can be used to gain insights on which columns are popular for filtering. Ideally, the partitioning and indexing strategy should reflect these empirical column usage patterns.
 
 #### Small data is good data
 Data redundancies can be present at the column or row level. 
