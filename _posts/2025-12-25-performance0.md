@@ -8,7 +8,7 @@ Lately I spent some time with performance optimization for a data warehouse usin
 
 ### The problem
 
-Given is a SELECT statement (possibly using common table expressions, i.e. involving the WITH clause) that should be replaced by another statement, which is logically equivalent, but has better performance. This immediately leads to two questions, namely: *What is performance?* and *What is logical equivalence?*
+Given is a SELECT statement (possibly using common table expressions, i.e. involving the WITH clause) that should be replaced by another statement, which is logically equivalent, but has better performance. This immediately leads to two questions, namely *What is logical equivalence?* and *What is performance?*:
 
 #### Logical equivalence
 Two SELECTS are logically equivalent if they return the same result, issued against all possible data instantiations of the database. In real life there is no time to test against all possible data. Instead, we are forced to live with necessarily incomplete test data. Hence, the observed accordance of the results of both SELECTs is a necessary, but not sufficient requirement for logical equivalence. Hence, it is not possible to assert the logical equivalence of two SELECTs. This is not a problem in practice, as the current state should never be regarded as a holy grail, and the ability to adapt to changing business requirements is welcome. Rather, emphasis should be placed on test automation and the ability to compare result sets quickly, possibly using clients like <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/sqpqr/">SQLPLUS</a> or <a href="https://docs.oracle.com/en/database/oracle/sql-developer-command-line/">SQLcl</a>.
